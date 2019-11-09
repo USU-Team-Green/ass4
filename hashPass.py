@@ -30,8 +30,8 @@ def check_password(plain_pass):
 
     for i in range(len(hashes)):
         md5 = hashlib.md5()
-        md5.update((salts[i] + plain_pass).encode('ascii'))
-        if md5.hexdigest() == hashes[i]:
+        md5.update((salts[i].strip() + plain_pass).encode('ascii'))
+        if md5.hexdigest().strip() == hashes[i].strip():
             print('User {} Authenticated'.format(i))
             return True
 
