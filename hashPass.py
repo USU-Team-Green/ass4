@@ -10,14 +10,14 @@ def hash_password(password):
     md5.update((salt + password).encode('ascii'))
     return salt, md5.hexdigest()
 
-def store_password(plain_pass):
+def store_password(username, plain_pass):
     salt, hsh = hash_password(plain_pass)
     with open('password_hashes.txt', 'a') as f:
-        f.write(hsh + "\n")
+        f.write(username + " " + hsh + "\n")
     with open('password_salts.txt', 'a') as f:
         f.write(salt + "\n")
 
-def check_password(plain_pass):
+def check_password(username, plain_pass):
     hashes = []
     salts = []
     try:
@@ -29,11 +29,13 @@ def check_password(plain_pass):
         print('no passwords')
 
     for i in range(len(hashes)):
-        md5 = hashlib.md5()
-        md5.update((salts[i].strip() + plain_pass).encode('ascii'))
-        if md5.hexdigest().strip() == hashes[i].strip():
-            print('User {} Authenticated'.format(i))
-            return True
+        hsh = hashes[i].split(' ')
+        if username == hsh[0]:
+            md5 = hashlib.md5()
+            md5.update((salts[i].strip() + plain_pass).encode('ascii'))
+            if md5.hexdigest().strip() == hsh[1].strip():
+                print('User {} Authenticated'.format(username))
+                return True
 
     print("No matching password found.")
     return False
