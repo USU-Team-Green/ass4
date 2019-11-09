@@ -1,7 +1,7 @@
 import tkinter
-from tkinter import filedialog
+import time
 
-from key_gen import generate_keys, encrypt, decrypt
+from hashPass import store_password, check_password
 
 
 class View():
@@ -13,12 +13,61 @@ class View():
 
 
 class Signup(View):
-  def check_password(self):
-    pass
+  def verify_password(self):
+    self.errorText.set('')
+    username = self.username.get()
+    firstName = self.firstName.get()
+    lastName = self.lastName.get()
+    dob = self.dob.get()
+    phoneNumber = self.phoneNumber.get()
+    address = self.address.get()
+    password1 = self.password1.get()
+    password2 = self.password2.get()
+
+    # passwords don't match error
+    if password1 != password2:
+      self.errorText.set('passwords do not match')
+      return
+
+    # empty field error
+    if password1 == '' or username == '' or firstName == '' or lastName == '' or dob == '' or phoneNumber == '' or address == '':
+      self.errorText.set('please fill out all areas')
+      return
+
+    # insecure password
+    if phoneNumber.strip() in password1 or phoneNumber in password1:
+      self.errorText.set('your password is not secure because your phone number is in it.')
+      return
+
+    if firstName.strip() in password1 or firstName in password1:
+      self.errorText.set('your password is not secure because your first name is in it.')
+      return
+
+    if lastName.strip() in password1 or lastName in password1:
+      self.errorText.set('your password is not secure because your last name is in it.')
+      return
+
+    if dob.strip() in password1 or dob in password1:
+      self.errorText.set('your password is not secure because your first name is in it.')
+      return
+
+    if address.strip() in password1 or address in password1:
+      self.errorText.set('your password is not secure because your first name is in it.')
+      return
+
+    if username.strip() in password1 or username in password1:
+      self.errorText.set('your password is not secure because your first name is in it.')
+      return
+
+    # check if password is in either password list.
+
+    store_password(username, password1)
+    self.go_success()
 
   def __init__(self, master, go_success, go_login):
     super().__init__()
     self.go_success = go_success
+    self.username = tkinter.Entry(master)
     self.firstName = tkinter.Entry(master)
     self.lastName = tkinter.Entry(master)
     self.dob = tkinter.Entry(master)
@@ -26,8 +75,12 @@ class Signup(View):
     self.address = tkinter.Entry(master)
     self.password1 = tkinter.Entry(master)
     self.password2 = tkinter.Entry(master)
+    self.errorText = tkinter.StringVar(master)
+    self.errors = tkinter.Label(master, textvariable=self.errorText)
 
     self.children = [
+      tkinter.Label(master, text="username"),
+      self.username,
       tkinter.Label(master, text="first name"),
       self.firstName,
       tkinter.Label(master, text="last name"),
@@ -42,8 +95,9 @@ class Signup(View):
       self.password1,
       tkinter.Label(master, text="password, again"),
       self.password2,
-      tkinter.Button(master, text="Next", command=self.check_password),
+      tkinter.Button(master, text="Next", command=self.verify_password),
       tkinter.Button(master, text="Already have an account", command=go_login),
+      self.errors
     ]
     for child in self.children:
       child.pack()
@@ -60,33 +114,26 @@ class Success(View):
 
 
 class Login(View):
-  def encryptButton(self):
-    self.m = self.entry.get()
-    cipher = encrypt(self.m, self.n, self.e)
-    self.resultText.insert(0, cipher)
-    self.resultText.config(state='readonly')
 
-  def readKey(self, rawstringpublic):
-    self.n, self.e = rawstringpublic.split('$')
-    self.n = int(self.n)
-    self.e = int(self.e)
+  def verify_password(self):
+    password = self.password.get()
+    username = self.username.get()
+    if check_password(username, password):
+      self.totalAttempts = 0
+      self.recentAttempts = 0
+      self.go_success()
+    else:
+      self.recentAttempts += 1
+      self.totalAttempts += 1
+      if self.recentAttempts == 3:
+        time.sleep(60 * 2**(self.totalAttempts//3))
+        self.recentAttempts = 0
 
-  def retrieve(self):
-    filedirpub = filedialog.askopenfilename(title="Find Public Key File...")
-    contentspub = ''
-    with open('{}'.format(filedirpub), 'r') as f:
-      contentspub = f.read()
-
-    self.readKey(contentspub)
-
-  def check_password(self):
-    pass
 
   def __init__(self, master, go_signup, go_success):
     super().__init__()
-    self.m = ''
-    self.n = ''
-    self.e = ''
+    self.recentAttempts = 0
+    self.totalAttempts = 0
     self.go_success = go_success
 
     self.username = tkinter.Entry(master)
@@ -96,7 +143,7 @@ class Login(View):
       self.username,
       tkinter.Label(master, text="Password"),
       self.password,
-      tkinter.Button(master, text="Next", command=self.check_password),
+      tkinter.Button(master, text="Next", command=self.verify_password),
       tkinter.Button(master, text="Signup", command=go_signup),
     ]
     for child in self.children:

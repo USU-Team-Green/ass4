@@ -1,12 +1,12 @@
 import tkinter
-from views import Signup, Password, Login, Success
+from views import Signup, Login, Success
 
 class MainLoopClass():
     top = tkinter.Tk()
 
     def __init__(self):
         self.top.geometry("800x480")
-        self.go_menu()
+        self.go_signup()
         self.top.mainloop()
 
     def clear(self):
