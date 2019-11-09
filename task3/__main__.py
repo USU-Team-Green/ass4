@@ -1,5 +1,5 @@
 import tkinter
-from views import MainMenu, GetKeys, Encrypt, Decrypt
+from views import Signup, Password, Login, Success
 
 class MainLoopClass():
     top = tkinter.Tk()
@@ -13,21 +13,17 @@ class MainLoopClass():
         if hasattr(self,'children'):
             self.children.clear()
 
-    def go_menu(self):
+    def go_signup(self):
         self.clear()
-        self.children = MainMenu(self.top, self.go_keys, self.go_encrypt, self.go_decrypt)
+        self.children = Signup(self.top, self.go_success, self.go_login)
 
-    def go_keys(self):
+    def go_login(self):
         self.clear()
-        self.children = GetKeys(self.top, self.go_menu)
+        self.children = Login(self.top, self.go_signup, self.go_success)
 
-    def go_encrypt(self):
+    def go_success(self):
         self.clear()
-        self.children = Encrypt(self.top, self.go_menu)
-
-    def go_decrypt(self):
-        self.clear()
-        self.children = Decrypt(self.top, self.go_menu)
+        self.children = Success(self.top, self.go_login)
 
 if __name__ == '__main__':
     main = MainLoopClass()
