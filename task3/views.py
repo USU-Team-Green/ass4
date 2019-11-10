@@ -60,6 +60,19 @@ class Signup(View):
       return
 
     # check if password is in either password list.
+    with open('enhanchedPasswordList.txt') as f:
+      wordList = f.readlines()
+      for word in wordList:
+        if word.strip('\n') == password1:
+          self.errorText.set('your password is not secure because you are using a common password.')
+          return
+
+    with open('originalPasswordList.txt') as f:
+      wordList = f.readlines()
+      for word in wordList:
+        if word.strip('\n') == password1:
+          self.errorText.set('your password is not secure because you are using a common password.')
+          return
 
     store_password(username, password1)
     self.go_success()
