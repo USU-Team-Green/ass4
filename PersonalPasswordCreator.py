@@ -6,7 +6,7 @@ def fName_password(s):
 
 #LastName
 def lName_password(s):
-    return 
+    return s
 
 #First Part of Date of birth includinga all
 def firstPartDateOfBirth_password(s):
@@ -42,7 +42,7 @@ def streetName_password(s):
     return string
 
 #Apartment Number
-def aprtment_password(s):
+def apartment_password(s):
     if s:
         return s
     else:
@@ -72,10 +72,10 @@ def enhanced_password_list_creator2(personalInfo):
     final = ""
 
     #Name
-    firstName = fname_password(personalInfo['First Name'])
+    firstName = fName_password(personalInfo['First Name'])
     final += firstName + '\n'
 
-    lastName = lname_password(personalInfo['Last Name'])
+    lastName = lName_password(personalInfo['Last Name'])
     final += lastName + '\n'
     #Date of birth
     firstPartofDateOfBirth = firstPartDateOfBirth_password(personalInfo['DOB'])
