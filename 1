@@ -12,25 +12,24 @@ def lName_password(s):
 
 #First Part of Date of birth includinga all
 def firstPartDateOfBirth_password(s):
-    string = s.replace('/', '')
+    string = str(s)
     firstPart = string[:random.randint(2, len(string)+1)]
     return firstPart
 
 #Second part of date of birth
 def secondPartDateOfirth_password(s):
-    string = s.replace('/', '')
-    secondPart = string[random.randint(2,len(string)-1):]
+    secondPart = s[random.randint(2,len(string)-1):]
     return secondPart
 
 #First part of phone including all digits
 def firstPartPhone_password(s):
-    digits = s.replace('-', '')
-    firstPart = digits[:random.randint(2,len(digits)+1)]
+    digits = s.strip('-')
+    fristPart = digits[:random.randint(2,len(digits)+1)]
     return firstPart
 
 #Second part of phone
 def secondPartPhone_password(s):
-    digits = s.replace('-', '')
+    digits = s.strip('-')
     secondPart = digits[random.randint(2, len(digits)-1):]
     return secondPart
 
