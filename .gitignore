@@ -2,3 +2,4 @@ __pycache__
 password_hashes.txt
 password_salts.txt
 *.swp
+.idea
