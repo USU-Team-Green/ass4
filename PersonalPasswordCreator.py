@@ -1,9 +1,7 @@
 import random
 import json
+import fileinput
 
-
-
-personlInfoo = {'First Name': 'Jon', 'Last Name': 'Doe', 'DOB': '10/09/1992', 'Phone':'208-123-456', 'Address': {'Street Name': '2660 Main st', 'Apartment Number': '20', 'City': 'Logan', 'State': 'UT', 'Zip': '84321'}, 'Email ID': 'JonDoe@gmail.com'}
 
 #FirstName
 def fName_password(s):
@@ -74,8 +72,8 @@ def emailId_password(s):
 
 #list creator
 def enhanced_password_list_creator2():
-    with open('personaInfo.jsona') as personalFile:
-        personalInfo = json.load(personalfile)
+    with open('personaInfo.json') as personalFile:
+        personalInfo = json.load(personalFile)
     passwords = open("enhancedPasswordList2.txt", "a")
     final = ""
 
