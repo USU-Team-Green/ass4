@@ -18,7 +18,7 @@ def firstPartDateOfBirth_password(s):
     return firstPart
 
 #Second part of date of birth
-def secondPartDateOfirth_password(s):
+def secondPartDateOfBirth_password(s):
     string = s.replace('/', '')
     secondPart = string[random.randint(2,len(string)-1):]
     return secondPart
@@ -66,7 +66,7 @@ def zip_password(s):
 
 #Email id
 def emailId_password(s):
-    email = s.spilt("@")[0]
+    email = s.split("@")[0]
     string = email[:random.randint(2, len(email))+1]
     return string
 
@@ -84,7 +84,7 @@ def enhanced_password_list_creator2():
     lastName = lName_password(personalInfo['Last Name'])
     final += lastName + '\n'
     #Date of birth
-    firstPartofDateOfBirth = firstPartDateOfBirth_password(personalInfo['DOB'])
+    firstPartOfDateOfBirth = firstPartDateOfBirth_password(personalInfo['DOB'])
     final += firstPartOfDateOfBirth + '\n'
 
     secondPartDateOfBirth = secondPartDateOfBirth_password(personalInfo['DOB'])
@@ -97,7 +97,7 @@ def enhanced_password_list_creator2():
     final += secondPartPhone + '\n'
     #Address
     address = personalInfo['Address']
-    streetNumber = streeNumber_password(address['Street Name'])
+    streetNumber = streetNumber_password(address['Street Name'])
     final += streetNumber + '\n'
 
     streetName = streetName_password(address['Street Name'])
@@ -110,7 +110,7 @@ def enhanced_password_list_creator2():
     final += city + '\n'
 
     state = state_password(address['State'])
-    final += State + '\n'
+    final += state + '\n'
     
     zipCode = zip_password(address['Zip'])
     final += zipCode + '\n'
