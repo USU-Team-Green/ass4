@@ -1,0 +1,16 @@
+[
+	{
+		"First Name": "Wayne",
+		"Last Name": "Roney",
+		"DOB": "10/10/1985",
+		"Phone": "208-404-8302",
+		"Address":{
+				"Street Name": "535 E 700 N",
+				"Apartment Number": "5",
+				"City": "Logan",
+				"State": "Utah",
+				"Zip": "84321"
+		},
+		"Email ID": "WayneRoney@gmail.com"
+	}	
+]
